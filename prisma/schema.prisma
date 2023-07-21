@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgres://postgres:postgres@localhost:5432/x3api-local"
+  url      = "postgres://postgres:postgres@localhost:5432/delete-db"
 }
 
 model Fingerprint {
