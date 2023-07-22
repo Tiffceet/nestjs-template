@@ -1,0 +1,101 @@
+openapi: 3.0.1
+info:
+  title: api
+  version: ''
+paths:
+  /movies/create-movie:
+    post:
+      description: Add a movie to the database
+      operationId: imdb_createMovie
+      tags:
+        - Imdb
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMovieRequest'
+  /movies/{id}:
+    get:
+      description: Retrieve a movie from the database based on the ID
+      operationId: imdb_getMovie
+      tags:
+        - Imdb
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/MovieId'
+          examples:
+            Example1:
+              value: tt0111161
+            Example2:
+              value: tt1234
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+              examples:
+                Example1:
+                  value:
+                    id: tt0111161
+                    title: The Shawshank Redemption
+                    rating: 9.3
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieId'
+              examples:
+                Example1:
+                  value: tt1234
+components:
+  schemas:
+    MovieId:
+      title: MovieId
+      type: string
+      description: The unique identifier for a Movie in the database
+    Movie:
+      title: Movie
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/MovieId'
+        title:
+          type: string
+          example: The Shawshank Redemption
+        rating:
+          type: number
+          format: double
+          description: The rating scale out of ten stars
+          example: 9.3
+      required:
+        - id
+        - title
+        - rating
+    CreateMovieRequest:
+      title: CreateMovieRequest
+      type: object
+      properties:
+        title:
+          type: string
+        rating:
+          type: number
+          format: double
+      required:
+        - title
+        - rating
+  securitySchemes: {}
